@@ -4,7 +4,48 @@ function restoreBookmark(bookmark, callback) {
   });
 }
 
+function removeBookmark() {
+  chrome.bookmarks.remove($('#id').val());
+}
+
+function saveBookmark() {
+  var bookmark = {
+    id: $('#id').val(),
+    title: $('#title').val(),
+    url: $('#url').val(),
+    parentId: $('#parentId').val()
+  };
+
+  if (bookmark.id) {
+    // Update bookmark
+    var changes = _.pick(bookmark, 'title', 'url');
+    var moves   = _.pick(bookmark, 'parentId');
+
+    chrome.bookmarks.update(bookmark.id, changes);
+    chrome.bookmarks.move(bookmark.id, moves);
+  } else {
+    // Create bookmark
+    var creation = _.omit(bookmark, 'id');
+
+    chrome.bookmarks.create(creation, function(result) {
+      // Update bookmark id in the page.
+      $('#id').val(result.id);
+    });
+  }
+}
+
 $(function() {
+  function initEventBinding() {
+    $('#save').click(function() {
+      saveBookmark();
+      window.close();
+    });
+
+    $('#remove').click(function() {
+      removeBookmark();
+      window.close();
+    });
+  }
 
   function initFolderTree(folderTree, folderId) {
     var $tree = $('#tree').fancytree({
@@ -52,7 +93,11 @@ $(function() {
         $('#id').val(bookmark.id);
 
         application.getFolderTree(function(folderTree) {
-          initFolderTree(folderTree, bookmark.parentId);
+          initFolderTree(folderTree, (bookmark.parentId || folderTree[0].id));
+          initEventBinding();
+
+          // Save bookmark automatically
+          saveBookmark();
         });
       });
     });
