@@ -1,8 +1,76 @@
 body {
-  width: 300px;
+  width: 314px;
+  background-color: #F0EFF0;
+}
+
+.pull-right {
+  float: right;
+}
+
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+button {
+  cursor: pointer;
+}
+
+.btn-primary {
+  font-weight: bold;
+}
+
+.container {
+  margin: 7px;
+}
+
+.form-group {
+  margin-bottom: 5px;
+}
+
+.form-group .control-label {
+  width: 25px;
+  float: left;
+  text-align: right;
+  padding-right: 5px;
+  padding-top: 4px;
+}
+
+.form-group .form-control {
+  width: 264px;
+  float: left;
+}
+
+input[type=search] {
+  -webkit-appearance: textfield;
+  border: 0;
+  border-bottom: 1px solid #F0EFF0;
+  display: block;
+  width: 100%;
+}
+
+input:focus {
+  outline: 0;
+}
+
+.form-group-tree {
+  border: 1px solid #e1dfe1;
 }
 
 #tree {
   max-height: 300px;
   overflow-y: auto;
+}
+
+#tree ul.fancytree-container {
+  border: 0;
+}
+
+#tree ul.fancytree-container:focus {
+  outline: 0;
 }
