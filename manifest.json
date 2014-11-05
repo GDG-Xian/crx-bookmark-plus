@@ -1,0 +1,30 @@
+{
+  "manifest_version": 2,
+  "name": "Bookmark Plus",
+  "short_name": "bookmark-plus",
+  "description": "Description for bookmark-plus",
+
+  "version": "0.1",
+
+  "icons": {
+    "16": "assets/icon_16.png",
+    "128": "assets/icon_128.png"
+  },
+
+  "background": {
+    "scripts": [
+      "assets/vendor/underscore-min.js",
+      "assets/javascripts/event.js"
+    ]
+  },
+
+  "page_action": {
+    "default_title": "Bookmark this page",
+    "default_popup": "popup.html"
+  },
+
+  "permissions": [
+    "tabs",
+    "bookmarks"
+  ]
+}
