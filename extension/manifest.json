@@ -7,8 +7,7 @@
   "version": "0.1",
 
   "icons": {
-    "16": "assets/icon_16.png",
-    "128": "assets/icon_128.png"
+    "128": "assets/images/icon_128.png"
   },
 
   "background": {
