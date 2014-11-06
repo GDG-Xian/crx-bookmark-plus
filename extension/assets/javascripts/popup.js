@@ -1,3 +1,5 @@
+var newRecord = false;
+
 function restoreBookmark(bookmark, callback) {
   chrome.bookmarks.search({ url: bookmark.url }, function(results) {
     callback(_.isEmpty(results) ? bookmark : _.first(results));
@@ -17,11 +19,11 @@ function saveBookmark() {
   };
 
   // Setup index if exists.
-  var index = $('#index').val();
+  var index = parseInt($('#index').val());
   if (!_.isNaN(index)) {
-    bookmark.index = parseInt(index);
+    bookmark.index = index;
   }
-
+  
   if (bookmark.id) {
     // Update bookmark
     var changes = _.pick(bookmark, 'title', 'url');
@@ -36,6 +38,7 @@ function saveBookmark() {
     chrome.bookmarks.create(creation, function(result) {
       // Update bookmark id in the page.
       $('#id').val(result.id);
+      newRecord = true;
     });
   }
 }
@@ -49,6 +52,14 @@ $(function() {
 
     $('#remove').click(function() {
       removeBookmark();
+      window.close();
+    });
+
+    $('#cancel').click(function() {
+      if (newRecord) {
+        removeBookmark();
+      }
+
       window.close();
     });
   }
