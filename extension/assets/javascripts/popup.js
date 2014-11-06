@@ -62,6 +62,9 @@ $(function() {
 
     // Auto select and expand selected folder.
     tree.visit(function(node) {
+      node.folder = true;
+      node.render();
+
       if (node.data.id == folderId) {
         node.setActive(true);
         node.makeVisible();
@@ -92,7 +95,7 @@ $(function() {
         $('#url').val(bookmark.url);
         $('#id').val(bookmark.id);
 
-        application.getFolderTree(function(folderTree) {
+        chrome.bookmarks.getFolderTree(function(folderTree) {
           initFolderTree(folderTree, (bookmark.parentId || folderTree[0].id));
           initEventBinding();
 
