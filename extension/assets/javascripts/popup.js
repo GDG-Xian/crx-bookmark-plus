@@ -16,10 +16,16 @@ function saveBookmark() {
     parentId: $('#parentId').val()
   };
 
+  // Setup index if exists.
+  var index = $('#index').val();
+  if (!_.isNaN(index)) {
+    bookmark.index = parseInt(index);
+  }
+
   if (bookmark.id) {
     // Update bookmark
     var changes = _.pick(bookmark, 'title', 'url');
-    var moves   = _.pick(bookmark, 'parentId');
+    var moves   = _.pick(bookmark, 'parentId', 'index');
 
     chrome.bookmarks.update(bookmark.id, changes);
     chrome.bookmarks.move(bookmark.id, moves);
@@ -56,6 +62,11 @@ $(function() {
         var node = data.node;
         $('#parentId').val(node.data.id);
       },
+      beforeActivate: function(event, data) {
+        if (data.node.unselectable) {
+          return false;
+        }
+      }
     });
 
     var tree = $tree.fancytree('getTree');
@@ -94,16 +105,27 @@ $(function() {
         $('#title').val(bookmark.title);
         $('#url').val(bookmark.url);
         $('#id').val(bookmark.id);
+        $('#index').val(bookmark.index);
 
         chrome.bookmarks.getFolderTree(function(folderTree) {
-          initFolderTree(folderTree, (bookmark.parentId || folderTree[0].id));
-          initEventBinding();
+          chrome.bookmarks.getRecentFolders(5, function(folders) {
+            var selected = bookmark.parentId || folders[0].id || folderTree[0].id;
 
-          // Save bookmark automatically
-          saveBookmark();
+            folderTree.unshift({
+              unselectable: true,
+              title: 'Recent folders',
+              children: folders
+            });
+
+            initFolderTree(folderTree, selected);
+            initEventBinding();
+
+            // Save bookmark automatically
+            saveBookmark();
+          });
+
         });
       });
     });
-
   });
 });
