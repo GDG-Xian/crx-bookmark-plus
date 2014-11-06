@@ -8,6 +8,7 @@
     <div class="container">
       <input type="hidden" id="id" />
       <input type="hidden" id="parentId" />
+      <input type="hidden" id="index" />
 
       <div class="form-group clearfix">
         <label for="title" class="control-label">Title</label>
@@ -25,7 +26,10 @@
       </div>
 
       <div class="form-group clearfix">
-        <button class="btn-primary pull-right" id="save">OK</button>
+        <div class="pull-right">
+          <button id="cancel">Cancel</button>
+          <button id="save" class="btn-primary">OK</button>
+        </div>
         <button id="remove">Remove</button>
       </div>
     </div>
@@ -35,6 +39,7 @@
     <script type="text/javascript" src="assets/vendor/jquery-ui.min.js"></script>
     <script type="text/javascript" src="assets/vendor/fancytree/jquery.fancytree.js"></script>
     <script type="text/javascript" src="assets/vendor/fancytree/jquery.fancytree.filter.js"></script>
+    <script type="text/javascript" src="assets/javascripts/crx-bookmarks-plus.js"></script>
     <script type="text/javascript" src="assets/javascripts/popup.js"></script>
   </body>
 </html>
